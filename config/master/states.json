@@ -1,0 +1,64 @@
+[
+  "intro",
+  { "name": "scanning", "on_enter": ["log_event"] },
+  {
+    "name": "phone",
+    "initial": "ringing",
+    "children": [
+      "ringing",
+      {
+        "name": "call",
+        "parallel": [
+          {
+            "name": "step",
+            "children": ["question1", "question2", "question3"],
+            "initial": "question1",
+            "transitions": [
+              ["a", "question1", "question2"],
+              ["b", "question1", "question2"],
+              ["c", "question1", "question2"],
+              ["d", "question1", "question2"]
+            ]
+          },
+          {
+            "name": "effect",
+            "children": ["intro", "strobe", "fire", "blackout"],
+            "initial": "intro",
+            "transitions": [
+              ["a", "intro", "strobe"],
+              ["b", "intro", "fire"],
+              ["c", "intro", "fire"],
+              ["d", "intro", "blackout"]
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "taskroom",
+    "children": ["intro", "question1", "question2", "question3"],
+    "initial": "intro"
+  },
+  "malfunction",
+  {
+    "name": "fix-sound",
+    "children": ["help", "solve"],
+    "initial": "help"
+  },
+  {
+    "name": "fix-wires",
+    "children": ["help", "solve"],
+    "initial": "help"
+  },
+  {
+    "name": "fix-levers",
+    "children": ["help", "solve"],
+    "initial": "help"
+  },
+  {
+    "name": "making-tune",
+    "children": ["instructions", "inspiration1", "inspiration2"]
+  },
+  "end"
+]
