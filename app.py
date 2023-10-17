@@ -32,7 +32,7 @@ def broadcast_state_change(event):
 
 # set up state machine
 machine = StateMachine(states=states,
-                       #    transitions=transitions,
+                       transitions=transitions,
                        initial="intro",
                        auto_transitions=False,
                        after_state_change=broadcast_state_change,
@@ -58,11 +58,11 @@ def set_state():
         #     return {"description": f"Cannot transition from {machine.state} to {new_state}"}, 400
 
         machine.to_state(machine, new_state)
-        return {"state": machine.state, "transitions": machine.get_valid_triggers()}
+        return {"state": machine.state, "triggers": machine.get_valid_triggers()}
 
     if request.method == 'GET':
 
-        return {"state": machine.state, "transitions": machine.get_valid_triggers()}
+        return {"state": machine.state, "triggers": machine.get_valid_triggers()}
 
 
 @app.route('/next', methods=['POST'])

@@ -8,7 +8,7 @@ class StateMachine(HierarchicalMachine):
 
     def __init__(self, *args, **kwargs):
         super().__init__(self, *args, **kwargs)
-        self.add_ordered_transitions()
+        # self.add_ordered_transitions()
         # print(self.get_triggers())
 
     # helper methods

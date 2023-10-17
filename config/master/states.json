@@ -11,13 +11,18 @@
         "parallel": [
           {
             "name": "step",
-            "children": ["question1", "question2", "question3"],
-            "initial": "question1",
+            "children": ["choosing", "question1", "question2", "question3"],
+            "initial": "choosing",
             "transitions": [
-              ["a", "question1", "question2"],
-              ["b", "question1", "question2"],
-              ["c", "question1", "question2"],
-              ["d", "question1", "question2"]
+              [
+                "answer_question",
+                ["question1", "question2", "question3"],
+                "choosing"
+              ],
+              ["a", "choosing", "question1"],
+              ["b", "choosing", "question1"],
+              ["c", "choosing", "question1"],
+              ["d", "choosing", "question1"]
             ]
           },
           {
