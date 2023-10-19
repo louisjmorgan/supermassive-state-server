@@ -1,0 +1,59 @@
+{
+  "name": "taskroom",
+  "parallel": [
+    {
+      "name": "sequencer",
+      "children": [
+        "off",
+        {
+          "name": "on",
+          "children": ["image", "option1", "option2", "option3"],
+          "initial": "image",
+          "transitions": [
+            ["sequencer_option1", "image", "option1"],
+            ["sequencer_option2", "image", "option2"],
+            ["sequencer_option3", "image", "option3"]
+          ]
+        }
+      ],
+      "initial": "off",
+      "transitions": [["sequencer_image", "off", "on"]]
+    },
+    {
+      "name": "cables",
+      "children": [
+        "off",
+        {
+          "name": "on",
+          "children": ["image", "option1", "option2", "option3"],
+          "initial": "image",
+          "transitions": [
+            ["cables_option1", "image", "option1"],
+            ["cables_option2", "image", "option2"],
+            ["cables_option3", "image", "option3"]
+          ]
+        }
+      ],
+      "transitions": [["cables_image", "off", "on"]],
+      "initial": "off"
+    },
+    {
+      "name": "levers",
+      "children": [
+        "off",
+        {
+          "name": "on",
+          "children": ["image", "option1", "option2", "option3"],
+          "initial": "image",
+          "transitions": [
+            ["levers_option1", "image", "option1"],
+            ["levers_option2", "image", "option2"],
+            ["levers_option3", "image", "option3"]
+          ]
+        }
+      ],
+      "transitions": [["levers_image", "off", "on"]],
+      "initial": "off"
+    }
+  ]
+}

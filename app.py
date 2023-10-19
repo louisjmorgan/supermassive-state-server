@@ -1,17 +1,8 @@
-import json
 from flask import Flask, request
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 from lib.state_machine import StateMachine
 from transitions.core import MachineError
-
-
-# load config
-with open(file='./config/master/states.json', encoding='utf8') as file:
-    states = json.load(file)
-
-with open(file='./config/master/transitions.json', encoding='utf8') as file:
-    transitions = json.load(file)
 
 
 # Flask app
@@ -31,12 +22,11 @@ def broadcast_state_change(event):
 
 
 # set up state machine
-machine = StateMachine(states=states,
-                       transitions=transitions,
-                       initial="intro",
-                       auto_transitions=False,
-                       after_state_change=broadcast_state_change,
-                       send_event=True)
+machine = StateMachine(
+    initial="intro",
+    auto_transitions=False,
+    after_state_change=broadcast_state_change,
+    send_event=True)
 
 
 @app.route('/')
@@ -62,7 +52,7 @@ def set_state():
 
     if request.method == 'GET':
 
-        return {"state": machine.state, "triggers": machine.get_valid_triggers()}
+        return {"state": machine.get_state_array(), "triggers": machine.get_valid_triggers()}
 
 
 @app.route('/next', methods=['POST'])

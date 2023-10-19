@@ -1,0 +1,77 @@
+{
+  "name": "phone",
+  "initial": "ringing",
+  "children": [
+    "ringing",
+    {
+      "name": "question1",
+      "initial": "choosing",
+      "children": [
+        "choosing",
+        { "name": "a" },
+        { "name": "b" },
+        { "name": "c" },
+        { "name": "d" }
+      ],
+      "transitions": [
+        ["a", "choosing", "a"],
+        ["b", "choosing", "b"],
+        ["c", "choosing", "c"],
+        ["d", "choosing", "d"]
+      ]
+    },
+    {
+      "name": "question2",
+      "initial": "choosing",
+      "children": [
+        "choosing",
+        { "name": "a" },
+        { "name": "b" },
+        { "name": "c" },
+        { "name": "d" }
+      ],
+      "transitions": [
+        ["a", "choosing", "a"],
+        ["b", "choosing", "b"],
+        ["c", "choosing", "c"],
+        ["d", "choosing", "d"]
+      ]
+    },
+    {
+      "name": "question3",
+      "initial": "choosing",
+      "children": [
+        "choosing",
+        { "name": "a" },
+        { "name": "b" },
+        { "name": "c" },
+        { "name": "d" }
+      ],
+      "transitions": [
+        ["a", "choosing", "a"],
+        ["b", "choosing", "b"],
+        ["c", "choosing", "c"],
+        ["d", "choosing", "d"]
+      ]
+    },
+    "malfunction"
+  ],
+  "transitions": [
+    ["answer_phone", "ringing", "question1"],
+    [
+      "answer",
+      ["question1_a", "question1_b", "question1_c", "question1_d"],
+      "question2"
+    ],
+    [
+      "answer",
+      ["question2_a", "question2_b", "question2_c", "question2_d"],
+      "question3"
+    ],
+    [
+      "answer",
+      ["question3_a", "question3_b", "question3_c", "question3_d"],
+      "malfunction"
+    ]
+  ]
+}

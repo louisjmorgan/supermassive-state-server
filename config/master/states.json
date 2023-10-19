@@ -1,69 +1,18 @@
 [
-  "intro",
+  { "name": "intro" },
   { "name": "scanning", "on_enter": ["log_event"] },
   {
-    "name": "phone",
-    "initial": "ringing",
-    "children": [
-      "ringing",
-      {
-        "name": "call",
-        "parallel": [
-          {
-            "name": "step",
-            "children": ["choosing", "question1", "question2", "question3"],
-            "initial": "choosing",
-            "transitions": [
-              [
-                "answer_question",
-                ["question1", "question2", "question3"],
-                "choosing"
-              ],
-              ["a", "choosing", "question1"],
-              ["b", "choosing", "question1"],
-              ["c", "choosing", "question1"],
-              ["d", "choosing", "question1"]
-            ]
-          },
-          {
-            "name": "effect",
-            "children": ["intro", "strobe", "fire", "blackout"],
-            "initial": "intro",
-            "transitions": [
-              ["a", "intro", "strobe"],
-              ["b", "intro", "fire"],
-              ["c", "intro", "fire"],
-              ["d", "intro", "blackout"]
-            ]
-          }
-        ]
-      }
-    ]
+    "name": "phone"
   },
   {
-    "name": "taskroom",
-    "children": ["intro", "question1", "question2", "question3"],
-    "initial": "intro"
-  },
-  "malfunction",
-  {
-    "name": "fix-sound",
-    "children": ["help", "solve"],
-    "initial": "help"
+    "name": "chatbot"
   },
   {
-    "name": "fix-wires",
-    "children": ["help", "solve"],
-    "initial": "help"
-  },
-  {
-    "name": "fix-levers",
-    "children": ["help", "solve"],
-    "initial": "help"
+    "name": "taskroom"
   },
   {
     "name": "making-tune",
     "children": ["instructions", "inspiration1", "inspiration2"]
   },
-  "end"
+  { "name": "end" }
 ]

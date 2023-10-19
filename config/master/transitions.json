@@ -1,9 +1,4 @@
 [
   { "trigger": "start_scanning", "source": "intro", "dest": "scanning" },
-  { "trigger": "start_ringing", "source": "scanning", "dest": "phone_ringing" },
-  {
-    "trigger": "answer_phone",
-    "source": "phone_ringing",
-    "dest": "phone_call"
-  }
+  { "trigger": "start_ringing", "source": "scanning", "dest": "phone_ringing" }
 ]
