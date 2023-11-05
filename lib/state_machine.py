@@ -2,6 +2,7 @@
 import json
 from transitions.extensions import HierarchicalMachine
 from lib.utils import listify, flatten_list, unique_list
+from functools import reduce
 
 
 def load_config():
@@ -32,6 +33,26 @@ def load_config():
     print(master_states)
     return (master_states, master_transitions)
 
+def state_reducer(parent, state):
+    if isinstance(state, list):
+        reduce(state_reducer, state, parent)
+    if state not in parent:
+        parent[state] = {}
+    return parent[state]
+
+def build_state_tree(state_list, tree):
+    if isinstance(state_list, list):
+        for sub_list in state_list:
+            if isinstance(sub_list, list):
+                new_tree = build_state_tree(sub_list, tree)
+                return new_tree
+            else:
+                tree[sub_list] = build_state_tree(state_list[1:], {})
+                return tree
+    else:
+        return {}
+        
+
 
 class StateMachine(HierarchicalMachine):
     """State Machine"""
@@ -59,9 +80,10 @@ class StateMachine(HierarchicalMachine):
         """checks if a given transition is allowed"""
         return dest in [transition.dest for transition in self.get_valid_transitions()]
 
-    def get_state_array(self):
+    def get_state_tree(self):
         """gets array containing hierarchy of nested/parallel states"""
-        return unique_list([nested_state.split(self.state_cls.separator) for nested_state in listify(self.state)])
+        return json.loads(json.dumps((self.build_state_tree(self.state, self.state_cls.separator))))
+        # return [nested_state.split(self.state_cls.separator) for nested_state in listify(self.state)]
 
     # transition callbacks
     def log_event(self, event):

@@ -17,8 +17,9 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 def broadcast_state_change(event):
     """updates all websocket listeners with the latest state"""
     print("after state change", event.state)
-    # emit("state change", {"state": event.state.name},
-    #      broadcast=True, namespace="/")
+    print(event.machine.get_state_tree())
+    emit("state change", {"state": machine.state, "state_tree": machine.get_state_tree(), "triggers": machine.get_valid_triggers()},
+         broadcast=True, namespace="/")
 
 
 # set up state machine
@@ -48,11 +49,11 @@ def set_state():
         #     return {"description": f"Cannot transition from {machine.state} to {new_state}"}, 400
 
         machine.to_state(machine, new_state)
-        return {"state": machine.state, "triggers": machine.get_valid_triggers()}
+        return {"state": machine.state, "state_tree": machine.get_state_tree(), "triggers": machine.get_valid_triggers()}
 
     if request.method == 'GET':
 
-        return {"state": machine.get_state_array(), "triggers": machine.get_valid_triggers()}
+        return {"state": machine.state, "state_tree": machine.get_state_tree(), "triggers": machine.get_valid_triggers()}
 
 
 @app.route('/next', methods=['POST'])
@@ -61,7 +62,7 @@ def next_state():
     # if "next_state" not in machine.get_valid_triggers():
     #     return {"description": "This state does not have an ordered transition"}, 400
     machine.next_state()
-    return {"state": machine.state, "triggers": machine.get_valid_triggers()}
+    return {"state": machine.state,  "state_tree": machine.get_state_tree(), "triggers": machine.get_valid_triggers()}
 
 
 @app.route('/trigger', methods=['POST'])
@@ -77,7 +78,7 @@ def trigger():
         print(e)
         return {"description": str(e)}, 400
 
-    return {"state": machine.state, "triggers": machine.get_valid_triggers()}
+    return {"state": machine.state, "state_tree": machine.get_state_tree(), "triggers": machine.get_valid_triggers()}
 
 
 @socketio.on("connect")
